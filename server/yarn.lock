@@ -28,6 +28,11 @@
   resolved "https://registry.npmmirror.com/@types/node/download/@types/node-16.11.7.tgz?cache=0&sync_timestamp=1636407492316&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.11.7.tgz#36820945061326978c42a01e56b61cd223dfdc42"
   integrity sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==
 
+"@types/validator@^13.1.3":
+  version "13.7.0"
+  resolved "https://registry.npmmirror.com/@types/validator/download/@types/validator-13.7.0.tgz#fa25263656d234473025c2d48249a900053c355a"
+  integrity sha512-+jBxVvXVuggZOrm04NR8z+5+bgoW4VZyLzUO+hmPPW1mVFL/HaitLAkizfv4yg9TbG8lkfHWVMQ11yDqrVVCzA==
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.nlark.com/ansi-styles/download/ansi-styles-3.2.1.tgz?cache=0&sync_timestamp=1618995588464&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fansi-styles%2Fdownload%2Fansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -68,6 +73,15 @@ chalk@^2.0.0, chalk@^2.3.0:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
+
+class-validator@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.nlark.com/class-validator/download/class-validator-0.13.1.tgz#381b2001ee6b9e05afd133671fbdf760da7dec67"
+  integrity sha1-OBsgAe5rngWv0TNnH733YNp97Gc=
+  dependencies:
+    "@types/validator" "^13.1.3"
+    libphonenumber-js "^1.9.7"
+    validator "^13.5.2"
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -173,6 +187,11 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+libphonenumber-js@^1.9.7:
+  version "1.9.42"
+  resolved "https://registry.npmmirror.com/libphonenumber-js/download/libphonenumber-js-1.9.42.tgz#41f41d540f89b6e3fd36de7120ddb57b3a468c77"
+  integrity sha1-QfQdVA+JtuP9Nt5xIN21ezpGjHc=
+
 minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npm.taobao.org/minimatch/download/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
@@ -269,6 +288,11 @@ typescript@^4.4.4:
   version "4.4.4"
   resolved "https://registry.npmmirror.com/typescript/download/typescript-4.4.4.tgz?cache=0&sync_timestamp=1637133621195&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Ftypescript%2Fdownload%2Ftypescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   integrity sha1-LNAaGh8WBwTTEB/VpY/w+fy4Aww=
+
+validator@^13.5.2:
+  version "13.7.0"
+  resolved "https://registry.npmmirror.com/validator/download/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  integrity sha1-T5ZYuhO6jz2C7ogdNRZInqhcCFc=
 
 wrappy@1:
   version "1.0.2"
