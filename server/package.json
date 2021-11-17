@@ -1,0 +1,15 @@
+{
+  "name": "TypeScript-Moviesys",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:guangheyang/TypeScript-Moviesys.git",
+  "author": "yangguanghe <1649063797@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "biild": "rd /s /q dist & tsc",
+    "dev": "nodemon --watch src -e ts --exec ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7"
+  }
+}
