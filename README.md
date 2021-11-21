@@ -16,3 +16,12 @@ TypeScript电影后台管理
 
 tslint
 跟eslint相似，用于检查代码风格
+
+数据库：mongobd
+
+数据库驱动：mongodb、mongoose
+
+这两个驱动，对TS的支持不是太好
+
+
+其他数据库驱动： typeorm(完全使用TS编写，基于类)，但是对mongodb支持不好

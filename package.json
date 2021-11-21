@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "class-transformer": "^0.4.0",
+    "mongoose": "^6.0.13",
     "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97"
   }
 }
