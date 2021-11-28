@@ -1,6 +1,8 @@
+import { ThunkAction } from "redux-thunk";
 import { ISearchCondition } from "../../services/CommonTypes";
-import { IMovie } from "../../services/MovieService";
+import { IMovie, MovieService } from "../../services/MovieService";
 import { IAction } from "../actions/ActionTypes";
+import { IRootState } from "../reducers/RootReducer";
 
 export type SaveMoviesAction = IAction<"movie_save", {
   movies: IMovie[],
@@ -42,9 +44,37 @@ function deleteAction(id: string): DeleteAction {
 
 export type MovieActions = SaveMoviesAction | SetConditionAction | SetLoadingAction | DeleteAction
 
+// 根据条件从服务器获取电影数据
+function fetchMovies(condition: ISearchCondition): ThunkAction<Promise<void>, IRootState, any, MovieActions> {
+  return async (dispatch, getState) => {
+    // 1.设置加载状态
+    dispatch(setLoadingAction(true))
+    // 2.设置条件
+    dispatch(setConditionAction(condition))
+    // 3.获取服务器数据
+    const curCondition = getState().movie.condition
+    const res = await MovieService.getMovies(curCondition)
+    // 4.更改仓库数据
+    dispatch(saveMoviesAction(res.data, res.total))
+    // 5.关闭加载状态
+    dispatch(setLoadingAction(false))
+  }
+}
+
+function deleteMovie(id: string): ThunkAction<Promise<void>, IRootState, any, MovieActions> {
+  return async dispatch => {
+    dispatch(setLoadingAction(true))
+    await MovieService.delete(id)
+    // 删除本地仓库数据
+    dispatch(deleteAction(id))
+    dispatch(setLoadingAction(false))
+  }
+}
+
 export default {
   saveMoviesAction,
   setConditionAction,
   setLoadingAction,
-  deleteAction
+  deleteAction,
+  fetchMovies
 }

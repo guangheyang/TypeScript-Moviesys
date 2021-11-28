@@ -11,14 +11,9 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-store.subscribe(() => {
-  console.log(store.getState())
+
+store.dispatch(MovieAction.fetchMovies({
+  page: 2
+})).then(() => {
+  store.dispatch(MovieAction.deleteAction("619a4f3f255c06267a2e9eaf"))
 })
-
-store.dispatch(MovieAction.setLoadingAction(true))
-
-store.dispatch(MovieAction.setConditionAction({
-  page: 2,
-  limit: 2,
-  key: 'yang'
-}))
