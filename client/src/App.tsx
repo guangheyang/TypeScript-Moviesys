@@ -1,11 +1,12 @@
 import React from 'react';
-
+import Layout from './pages/Layout';
+import { BrowserRouter, Route } from 'react-router-dom'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        hello,world
-      </header>
+    <div>
+      <BrowserRouter>
+        <Route path="/" component={ Layout }></Route>
+      </BrowserRouter>
     </div>
   );
 }
