@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { MovieService } from './services/MovieService';
-
+import { store } from './redux/store'
+import MovieAction from './redux/actions/MovieAction';
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -11,6 +11,14 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-MovieService.getMovies({}).then(res => {
-  console.log(res, 'res')
+store.subscribe(() => {
+  console.log(store.getState())
 })
+
+store.dispatch(MovieAction.setLoadingAction(true))
+
+store.dispatch(MovieAction.setConditionAction({
+  page: 2,
+  limit: 2,
+  key: 'yang'
+}))
