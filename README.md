@@ -25,3 +25,15 @@ tslint
 
 
 其他数据库驱动： typeorm(完全使用TS编写，基于类)，但是对mongodb支持不好
+
+react脚手架
+
+create-react-app
+
+nextjs
+
+unijs
+
+先开发客户端的api请求
+
+有时服务器和客户端会共用一个类型，要处理重复的代码问题，最佳做法是使用webpack搭建工程。
