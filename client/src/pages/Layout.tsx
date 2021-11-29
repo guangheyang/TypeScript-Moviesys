@@ -12,26 +12,27 @@ const _Layout: React.FC = function () {
   return (
     <div className="container">
       <Layout>
-        <Sider>
-          <Menu mode="inline" theme="dark">
-            <Menu.Item key="1">
-              <NavLink to="/">首页</NavLink>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <NavLink to="/movie">电影列表</NavLink>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <NavLink to="/movie/add">添加电影</NavLink>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <NavLink to="/movie/edit/234">编辑电影</NavLink>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+        <Header className="header">
+          <NavLink to="/">猫眼电影管理系统</NavLink>
+        </Header>
+
         <Layout>
-          <Header className="header">
-            <NavLink to="/">猫眼电影管理系统</NavLink>
-          </Header>
+          <Sider>
+            <Menu mode="inline" theme="dark">
+              <Menu.Item key="1">
+                <NavLink to="/">首页</NavLink>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <NavLink to="/movie">电影列表</NavLink>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <NavLink to="/movie/add">添加电影</NavLink>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <NavLink to="/movie/edit/234">编辑电影</NavLink>
+              </Menu.Item>
+            </Menu>
+          </Sider>
           <Content>
             <div className="main">
               <Route path="/" component={Home} exact></Route>
