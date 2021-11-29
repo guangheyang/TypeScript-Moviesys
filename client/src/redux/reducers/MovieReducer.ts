@@ -1,7 +1,7 @@
 import { Reducer } from "react";
 import { ISearchCondition } from "../../services/CommonTypes";
 import { IMovie } from "../../services/MovieService";
-import { DeleteAction, MovieActions, SaveMoviesAction, SetConditionAction, SetLoadingAction } from "../actions/MovieAction";
+import { DeleteAction, MovieActions, MovieSwitchChangeAction, SaveMoviesAction, SetConditionAction, SetLoadingAction } from "../actions/MovieAction";
 
 export type IMovieCondition = Required<ISearchCondition> 
 export interface IMovieState {
@@ -89,6 +89,26 @@ const deleteMovie: MovieReducer<DeleteAction> = function(state, action) {
   }
 }
 
+const changeSwitch: MovieReducer<MovieSwitchChangeAction> = function(state, action) {
+  // 根据id找到对象
+  const movie = state.data.find(d => d._id === action.payload.id)
+  if (!movie) return state
+  // 克隆
+  const newMovie = {  ...movie }
+  newMovie[action.payload.type] = action.payload.newVal
+  // 将对象重新放回数组
+  const newData = state.data.map(d => {
+    if (d._id === action.payload.id) {
+      return newMovie
+    }
+    return d
+  })
+  return {
+    ...state,
+    data: newData
+  }
+}
+
 export default function(state: IMovieState = defaultState, action: MovieActions) {
   switch(action.type) {
     case 'movie_save':
@@ -99,6 +119,8 @@ export default function(state: IMovieState = defaultState, action: MovieActions)
       return setLoading(state, action)
     case 'movie_delete':
       return deleteMovie(state, action)
+    case 'movie_switch':
+      return changeSwitch(state, action)
     default:
       return state
   }

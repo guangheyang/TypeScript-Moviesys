@@ -21,3 +21,8 @@ export interface ISearchCondition {
   key?: string
 }
 
+export enum SwitchType {
+  isHot = "isHot",
+  isComing = "isComing",
+  isClassic = "isClassic"
+}

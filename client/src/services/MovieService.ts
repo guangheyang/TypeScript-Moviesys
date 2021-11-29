@@ -19,7 +19,7 @@ export class MovieService {
     return data
   }
 
-  public static async edit(id: string, movie: IMovie): Promise<IResponstData<true> | IResponseError>{
+  public static async edit(id: string, movie: Partial<IMovie>): Promise<IResponstData<true> | IResponseError>{
     const { data } = await axios.put('/api/movie/' + id, movie)
     return data
   }

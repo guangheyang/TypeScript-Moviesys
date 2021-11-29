@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import { ISearchCondition } from "../../services/CommonTypes";
+import { ISearchCondition, SwitchType } from "../../services/CommonTypes";
 import { IMovie, MovieService } from "../../services/MovieService";
 import { IAction } from "../actions/ActionTypes";
 import { IRootState } from "../reducers/RootReducer";
@@ -42,7 +42,23 @@ function deleteAction(id: string): DeleteAction {
   }
 }
 
-export type MovieActions = SaveMoviesAction | SetConditionAction | SetLoadingAction | DeleteAction
+export type MovieSwitchChangeAction = IAction<'movie_switch', {
+  type: SwitchType,
+  newVal: boolean,
+  id: string
+}>
+function changeSwitchAction(type: SwitchType, newVal: boolean, id: string): MovieSwitchChangeAction {
+  return {
+    type: 'movie_switch',
+    payload: {
+      type,
+      newVal,
+      id
+    }
+  }
+}
+
+export type MovieActions = SaveMoviesAction | SetConditionAction | SetLoadingAction | DeleteAction | MovieSwitchChangeAction
 
 // 根据条件从服务器获取电影数据
 function fetchMovies(condition: ISearchCondition): ThunkAction<Promise<void>, IRootState, any, MovieActions> {
@@ -71,10 +87,21 @@ function deleteMovie(id: string): ThunkAction<Promise<void>, IRootState, any, Mo
   }
 }
 
+function changeSwitch(type: SwitchType, newVal: boolean, id: string): ThunkAction<Promise<void>, IRootState, any, MovieActions> {
+  return async dispatch => {
+    dispatch(changeSwitchAction(type, newVal, id))
+    await MovieService.edit(id, {
+      [type]: newVal
+    })
+  }
+}
 export default {
   saveMoviesAction,
   setConditionAction,
   setLoadingAction,
   deleteAction,
-  fetchMovies
+  fetchMovies,
+  deleteMovie,
+  changeSwitchAction,
+  changeSwitch
 }
