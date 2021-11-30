@@ -25,4 +25,6 @@ code {
 
 .container .main {
   padding: 1em;
+  overflow-y: scroll;
+  height: calc(100vh - 64px);
 }

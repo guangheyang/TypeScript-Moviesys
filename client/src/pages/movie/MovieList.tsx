@@ -4,7 +4,7 @@ import MovieTable, { IMovieTableEvents } from "../../components/MovieTable";
 import { connect } from 'react-redux'
 import { IRootState } from "../../redux/reducers/RootReducer";
 import MovieAction from "../../redux/actions/MovieAction";
-import MovieReducer, { IMovieState } from "../../redux/reducers/MovieReducer";
+import { IMovieState } from "../../redux/reducers/MovieReducer";
 
 function mapStateToProps(state: IRootState): IMovieState {
   return state.movie
@@ -21,6 +21,14 @@ function mapDispatchToProps(dispatch: Dispatch<any>): IMovieTableEvents {
     },
     onSwitchChange(type, newState, id) {
       dispatch(MovieAction.changeSwitch(type, newState, id))
+    },
+    async onDelete(id) {
+      await dispatch(MovieAction.deleteMovie(id))
+    },
+    onPageChange(newPage) {
+      dispatch(MovieAction.fetchMovies({
+        page: newPage
+      }))
     }
   }
 }

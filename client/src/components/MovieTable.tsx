@@ -1,9 +1,10 @@
 import React from 'react'
 import { IMovieState } from '../redux/reducers/MovieReducer'
-import { Table, Image, Switch } from 'antd'
-import { ColumnProps } from 'antd/lib/table'
+import { Table, Image, Switch, Button, Popconfirm } from 'antd'
+import { ColumnProps, TablePaginationConfig } from 'antd/lib/table'
 import { IMovie } from '../services/MovieService'
 import { SwitchType } from '../services/CommonTypes'
+import { NavLink } from 'react-router-dom'
 
 // interface IMovieTableProps extends IMovieState {
 //   /**
@@ -17,6 +18,8 @@ export interface IMovieTableEvents {
    */
   onLoad: () => void
   onSwitchChange: (type: SwitchType, newState: boolean, id: string) => void
+  onDelete: (id: string) => Promise<void>
+  onPageChange: (newPage: number) => void
 }
 export default class extends React.Component<IMovieTableEvents & IMovieState> {
 
@@ -100,13 +103,53 @@ export default class extends React.Component<IMovieTableEvents & IMovieState> {
           )
         }
       },
-      { title: "票房", dataIndex: "boxOffice" }
+      { title: "票房", dataIndex: "boxOffice" },
+      {
+        title: "操作",
+        dataIndex: "_id",
+        render: (id: string) => {
+          return (
+            <div>
+              <NavLink to={'/movie/edit/' + id}>
+                <Button type="primary">编辑</Button>
+              </NavLink>
+              <Popconfirm title="确定要删除？" onConfirm={
+                () => {
+                  this.props.onDelete(id)
+                }
+              } okText="确定" cancelText="取消">
+                <Button type="default">删除</Button>
+              </Popconfirm>
+            </div >
+          )
+        }
+      },
     ]
+  }
+
+  getPageConfig(): TablePaginationConfig | false {
+    if (!this.props.total) return false
+    return {
+      current: this.props.condition.page,
+      pageSize: this.props.condition.limit,
+      total: this.props.total
+    }
+  }
+
+  handleChange(pagination: TablePaginationConfig) {
+    this.props.onPageChange(pagination.current!)
   }
 
   render() {
     return (
-      <Table rowKey="_id" dataSource={this.props.data} columns={this.getColumns()}></Table>
+      <Table
+        rowKey="_id"
+        dataSource={this.props.data}
+        columns={this.getColumns()}
+        loading={ this.props.isLoading }
+        pagination={this.getPageConfig()}
+        onChange={ this.handleChange.bind(this) }
+      />
     )
   }
 }
