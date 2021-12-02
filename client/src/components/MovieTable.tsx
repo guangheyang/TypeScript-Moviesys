@@ -1,10 +1,11 @@
 import React from 'react'
 import { IMovieState } from '../redux/reducers/MovieReducer'
-import { Table, Image, Switch, Button, Popconfirm } from 'antd'
+import { Table, Image, Switch, Button, Popconfirm, Input,  } from 'antd'
 import { ColumnProps, TablePaginationConfig } from 'antd/lib/table'
 import { IMovie } from '../services/MovieService'
 import { SwitchType } from '../services/CommonTypes'
 import { NavLink } from 'react-router-dom'
+import { SearchOutlined } from '@ant-design/icons';
 
 // interface IMovieTableProps extends IMovieState {
 //   /**
@@ -20,6 +21,8 @@ export interface IMovieTableEvents {
   onSwitchChange: (type: SwitchType, newState: boolean, id: string) => void
   onDelete: (id: string) => Promise<void>
   onPageChange: (newPage: number) => void
+  onKeyChange: (key: string) => void
+  onSearch: () => void
 }
 export default class extends React.Component<IMovieTableEvents & IMovieState> {
 
@@ -27,6 +30,38 @@ export default class extends React.Component<IMovieTableEvents & IMovieState> {
     if (this.props.onLoad) {
       this.props.onLoad()
     }
+  }
+
+  private handleSearch() {
+    this.props.onSearch()
+  }
+  private getFilterDropDown() {
+    return (
+      <div style={{padding: 8}}>
+        <Input 
+          style={{width: 188,marginBottom: 8,display: 'block'}}
+          value={this.props.condition.key}
+          onChange={e => this.props.onKeyChange(e.target.value)}
+          onPressEnter={() => this.handleSearch()}
+        />
+        <Button
+          type="primary"
+          size="small"
+          style={{width: 90, marginRight: 8}}
+          onClick={() => this.handleSearch()}>
+            搜索
+          </Button>
+          <Button
+          size="small"
+          style={{width: 90}}
+          onClick={() => {
+            this.props.onKeyChange("")
+            this.handleSearch()
+          }}>
+            重置
+          </Button>
+      </div>
+    )
   }
 
   private getColumns(): ColumnProps<IMovie>[] {
@@ -54,7 +89,12 @@ export default class extends React.Component<IMovieTableEvents & IMovieState> {
           }
         }
       },
-      { title: "名称", dataIndex: "name" },
+      { 
+        title: "名称", 
+        dataIndex: "name",
+        filterDropdown: this.getFilterDropDown.bind(this),
+        filterIcon: <SearchOutlined />
+      },
       {
         title: "地区",
         dataIndex: "areas",
