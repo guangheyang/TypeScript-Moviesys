@@ -6,7 +6,7 @@ import { IResponseError, IResponstData } from "../services/CommonTypes";
 
 interface IImageUploadProps {
   curImageUrl?: string
-  onChange: (imageUrl: string) => void
+  onChange?: (imageUrl: string) => void
 }
 interface IShowState {
   showModal: boolean
@@ -53,8 +53,9 @@ export default class extends React.Component<IImageUploadProps, IShowState> {
     if (resp.err) {
       message.error('上传失败')
     } else {
-      console.log(resp.data, 'data')
-      this.props.onChange(resp.data!)
+      if(this.props.onChange) {
+        this.props.onChange(resp.data!)
+      }
     }
   }
 
@@ -69,7 +70,11 @@ export default class extends React.Component<IImageUploadProps, IShowState> {
           fileList={this.getFileList()}
           customRequest={this.handleRequest.bind(this)}
           onRemove={
-            () => { this.props.onChange('') }
+            () => {
+              if(this.props.onChange) {
+                this.props.onChange('') 
+              }
+            }
           }
           onPreview={
             () => {

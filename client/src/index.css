@@ -28,3 +28,6 @@ code {
   overflow-y: scroll;
   height: calc(100vh - 64px);
 }
+.container .main::-webkit-scrollbar {
+  display: none;
+}
