@@ -75,6 +75,7 @@ export default class extends React.Component<IMovieTableEvents & IMovieState> {
               width={50}
               height={50}
               src={src}
+              preview={false}
             />
             )
           } else {

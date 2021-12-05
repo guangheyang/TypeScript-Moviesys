@@ -1,22 +1,31 @@
 import React from "react";
-import ImageUpload from "../../components/ImageUpload"
-export default class extends React.Component {
+import { RouteComponentProps } from "react-router";
+import MovieForm from "../../components/MovieForm";
+import { MovieService } from "../../services/MovieService";
+
+interface IParams {
+  id: string
+}
+export default class extends React.Component<RouteComponentProps<IParams>> {
   state = {
     image: ''
   }
   render() {
     return (
-      <h1>
-        <ImageUpload 
-        curImageUrl={this.state.image}
-        onChange={
-          newUrl => {
-            this.setState({
-              image: newUrl
-            })
-          }
-        }></ImageUpload>
-      </h1>
+      <MovieForm onSubmit={async (movie) => {
+        const rep = await MovieService.add(movie)
+        if (rep.err) {
+          return false
+        } else {
+          return true
+        }
+      }}
+      onSuccessCallback={
+        () => {
+          console.log('aa')
+          this.props.history.push('/movie')
+        }
+      }></MovieForm>
     )
   }
 }

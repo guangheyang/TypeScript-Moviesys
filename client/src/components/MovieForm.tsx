@@ -1,6 +1,5 @@
 import { Button, Checkbox, Form, Input, InputNumber, message, Switch } from "antd";
 import React from "react";
-import { RouteComponentProps, withRouter } from "react-router";
 import { IMovie } from "../services/MovieService";
 import ImageUpload from "./ImageUpload";
 import "reflect-metadata"
@@ -24,10 +23,12 @@ const AllTypes: { label: string, value: string }[] = [
 interface IFormProp {
   onSubmit: (movie: IMovie) => Promise<boolean>
   onSuccessCallback: () => void
+  movie?: IMovie
 }
 class MovieForm extends React.Component<IFormProp> {
   state = {
-    image: ''
+    image: '',
+    movie: {}
   }
   async onFinish(values: IMovie) {
     values.poster = this.state.image
@@ -45,16 +46,24 @@ class MovieForm extends React.Component<IFormProp> {
   onFinishFailed(errorInfo: any) {
     console.log('Failed:', errorInfo);
   };
+  componentDidMount() {
+    const movie = this.props.movie
+    if (movie) {
+      this.setState({
+        movie,
+        image: movie.poster
+      })
+    }
+  }
   render() {
-    const normFile = (newUrl: string) => {
-      console.log('Upload event:', newUrl);
+    const formFile = (newUrl: string) => {
       this.setState({
         image: newUrl
       })
-      console.log(this)
     };
     return (
       <Form
+        initialValues={{ ...this.props.movie, poster: this.state.image }}
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 20, offset: 1 }}
         style={{ width: '400px' }}
@@ -64,7 +73,7 @@ class MovieForm extends React.Component<IFormProp> {
         <Form.Item label="电影名称" name="name" rules={[{ required: true, message: '请填写电影名称' }]}>
           <Input></Input>
         </Form.Item>
-        <Form.Item label="封面图" name="poster" valuePropName="poster" getValueFromEvent={normFile}>
+        <Form.Item label="封面图" name="poster" valuePropName="poster" getValueFromEvent={formFile}>
           <ImageUpload curImageUrl={this.state.image} />
         </Form.Item>
         <Form.Item label="地区" name="areas" rules={[{ required: true, message: '请选择地区' }]}>
@@ -77,17 +86,17 @@ class MovieForm extends React.Component<IFormProp> {
             options={AllTypes}
           ></Checkbox.Group>
         </Form.Item>
-        <Form.Item label="时长（分钟）" rules={[{ required: true, message: '请填写时长' }]}>
+        <Form.Item label="时长（分钟）" name="timeLong" rules={[{ required: true, message: '请填写时长' }]}>
           <InputNumber min={1} step={10} />
         </Form.Item>
-        <Form.Item label="正在热映" name="isHot">
-          <Switch defaultChecked />
+        <Form.Item label="正在热映" name="isHot" valuePropName="checked">
+          <Switch  />
         </Form.Item>
-        <Form.Item label="即将上映" name="isComing">
-          <Switch defaultChecked />
+        <Form.Item label="即将上映" name="isComing" valuePropName="checked">
+          <Switch  />
         </Form.Item>
-        <Form.Item label="经典电影" name="isClassic">
-          <Switch defaultChecked />
+        <Form.Item label="经典电影" name="isClassic" valuePropName="checked">
+          <Switch  />
         </Form.Item>
         <Form.Item label="描述" name="description">
           <Input.TextArea />

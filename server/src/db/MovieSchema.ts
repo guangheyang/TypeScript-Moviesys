@@ -9,6 +9,7 @@ const movieSchma = new Mongoose.Schema<IMovie>({
   timeLong: Number,
   isHot: Boolean,
   isComing: Boolean,
+  isClassic: Boolean,
   description: String,
   poster: String,
   boxOffice: Number
